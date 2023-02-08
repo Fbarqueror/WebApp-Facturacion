@@ -1,0 +1,76 @@
+﻿@page
+@model WebApp.Pages.Roles.GridModel
+@{
+}
+<div class="container-fluid">
+
+    <div class="card">
+        <div class="card-header">
+            Roles
+        </div>
+        <div class="card-body">
+
+            <a  class="btn btn-primary" asp-page="Edit">
+                <i class='bx bxs-add-to-queue'></i> Agregar Roles
+            </a>
+            <div class="dropdown-divider"></div>
+            <div class="row">
+                <div class="col-12">
+                    <table id="GridView" class="table table-bordered table table-striped table table-hover">
+                        <thead>
+                            <tr>
+                               
+                                <th> Nombre</th>
+                                <th> Menu Prod</th>
+                                <th> Menu Usua</th>
+                                <th> Menu Rol</th>
+                                <th> Menu Bita</th>
+                                <th> Actua Prod</th>
+                                <th> Actua Usua</th>
+                                <th> Actua Rol</th>
+                                <th> Elim Prod</th>
+                                <th> Elim Usua</th>
+                                <th> Elim Rol</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tboby>
+                            @foreach (var item in Model.GridList)
+                            {
+                                <tr>
+                                
+                                <td>@item.Nombre</td>
+                                    <td><input type="checkbox" class="form-check-input" asp-for="@item.Menu_Productos" v-model="@item.Menu_Productos" disabled ></td>
+                                    <td><input type="checkbox" class="form-check-input" asp-for="@item.Menu_Usuarios" v-model="@item.Menu_Usuarios" disabled></td>
+                                    <td><input type="checkbox" class="form-check-input" asp-for="@item.Menu_Roles" v-model="@item.Menu_Roles" disabled></td>
+                                    <td><input type="checkbox" class="form-check-input" asp-for="@item.Menu_Bitacoras" v-model="@item.Menu_Bitacoras" disabled></td>
+                                    <td><input type="checkbox" class="form-check-input" asp-for="@item.Actualizar_Productos" v-model="@item.Actualizar_Productos" disabled></td>
+                                    <td><input type="checkbox" class="form-check-input" asp-for="@item.Actualizar_Usuarios" v-model="@item.Actualizar_Usuarios" disabled></td>
+                                    <td><input type="checkbox" class="form-check-input" asp-for="@item.Actualizar_Roles" v-model="@item.Actualizar_Roles" disabled></td>
+                                    <td><input type="checkbox" class="form-check-input" asp-for="@item.Eliminar_Productos" v-model="@item.Eliminar_Productos" disabled></td>
+                                    <td><input type="checkbox" class="form-check-input" asp-for="@item.Eliminar_Usuarios" v-model="@item.Eliminar_Usuarios" disabled></td>
+                                    <td><input type="checkbox" class="form-check-input" asp-for="@item.Eliminar_Roles" v-model="@item.Eliminar_Roles" disabled></td>
+                                <td>
+                                    <a class="btn btn-primary" asp-page="Edit" asp-route-id="@item.IdRoles"><i class='bx bx-edit-alt'></i></a>
+
+                                    <button type="button" class="btn btn-danger" onclick="RolesGrid.OnClickEliminar(@item.IdRoles)">
+                                        <i class='bx bx-trash'></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            }
+                        </tboby>
+                    </table>
+
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+
+
+</div>
+
+@section Scripts{ <script defer src="~/App/Roles/Grid.js"></script> }

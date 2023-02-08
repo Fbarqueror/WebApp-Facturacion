@@ -1,0 +1,81 @@
+﻿@page
+@model WebApp.Pages.Usuario.EditModel
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor Context;
+
+@{
+    var UsuarioSession = Context.HttpContext.Session.Get<Entity.UsuariosEntity>(IApp.UsuarioSession);
+    if (!Context.HttpContext.SessionOnline())
+    {
+        Context.HttpContext.Response.Redirect("/Login");
+    }
+    Model.Entity.UsuarioRegistro = @UsuarioSession?.Nombre;
+}
+
+
+<div id="AppEdit" class="container" data-entity="@JsonSerializer.Serialize(Model.Entity)" v-cloak>
+    <div class="card">
+        <div class="card-header">
+            @(Model.id.HasValue ? "Actualizar" : "Nuevo Usuario")
+        </div>
+        <div class="card-body">
+            <form id="FormEdit">
+                <input type="hidden" asp-for="Entity.IdUsuario" v-model="Entity.IdUsuario" />
+
+
+
+                <div class="form-group mb-3">
+                    <label for="Entity.Usuario" class="form-label">Usuario</label>
+                    <input type="text" class="form-control" asp-for="Entity.Usuario" v-model="Entity.Usuario" maxlength="250" required>
+                </div>
+                
+
+                <div class="form-group mb-3">
+                    <label for="Entity.Nombre" class="form-label">Nombre</label>
+                    <input type="text" class="form-control" asp-for="Entity.Nombre" v-model="Entity.Nombre" maxlength="250" required>
+                </div>
+
+
+                <div class="form-group mb-3">
+                    <label for="Entity.Contrasena" class="form-label">Contraseña</label>
+                    <input type="text" class="form-control" asp-for="Entity.Contrasena" v-model="Entity.Contrasena" maxlength="250" required>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="Entity.Rol" class="form-label">Rol</label>
+                    <input type="text" class="form-control" asp-for="Entity.Rol" v-model="Entity.Rol" maxlength="250" required>
+                </div>
+
+               
+                <div class="form-group mb-3">
+                    <label for="Entity.Estado" class="form-label">Estado </label>
+                    <input type="checkbox" class="form-check-input" asp-for="Entity.Estado" v-model="Entity.Estado">
+                </div>
+
+
+                 <div class="form-group mb-3">
+                    <label for="Entity.UsuarioRegistro" class="form-label">Usuario Registro </label>
+                    <input type="text" class="form-control" asp-for="Entity.UsuarioRegistro" v-model="Entity.UsuarioRegistro" readonly required>
+
+                </div>
+                 
+
+                <div class="row">
+                    <div class="col-4">
+                        <button type="button" @@click="Save" class="btn btn-primary">
+                            @(Model.id.HasValue? "Actualizar": "Agregar")
+                        </button>
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+@section Scripts
+{
+    <script defer src="~/App/Usuario/Edit.js"></script>
+}

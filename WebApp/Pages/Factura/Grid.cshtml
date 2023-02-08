@@ -1,0 +1,58 @@
+﻿@page
+@model WebApp.Pages.Factura.GridModel
+@{
+}
+
+<div class="container-fluid">
+
+    <div class="card">
+        <div class="card-header">
+            Factura
+        </div>
+        <div class="card-body">
+
+            <a class="btn btn-primary" asp-page="Edit"> 
+                <i class='bx bxs-add-to-queue'></i> Nueva Factura
+            </a>
+            <div class="dropdown-divider"></div>
+            <div class="row">
+                <div class="col-12">
+                    <table id="GridView" class="table table-bordered table table-striped table table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre Cliente</th>    
+                                <th>Fecha Registro</th>
+                                <th>Vendedor</th>
+                            </tr>
+                        </thead>
+                        <tboby>
+                            @foreach (var item in Model.GridList)
+                            {
+                            <tr>
+                                <td>@item.IdFactura</td>
+                                <td>@item.Cliente</td>
+                                <td>@item.FechaRegistro</td>
+                                <td>@item.UsuarioRegistro</td>
+                                
+                              
+                            </tr>
+                            }
+                        </tboby>
+                    </table>
+
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+
+
+</div>
+
+@section Scripts{ 
+
+    <script defer src="~/App/Factura/Grid.js"></script>
+}

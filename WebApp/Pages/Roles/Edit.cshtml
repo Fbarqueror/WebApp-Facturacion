@@ -1,0 +1,100 @@
+﻿@page
+@model WebApp.Pages.Roles.EditModel
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor Context;
+
+@{
+    var UsuarioSession = Context.HttpContext.Session.Get<Entity.UsuariosEntity>(IApp.UsuarioSession);
+    if (!Context.HttpContext.SessionOnline())
+    {
+        Context.HttpContext.Response.Redirect("/Login");
+    }
+    Model.Entity.UsuarioRegistro = @UsuarioSession?.Nombre;
+}
+
+
+<div id="AppEdit" class="container" data-entity="@JsonSerializer.Serialize(Model.Entity)" v-cloak>
+    <div class="card">
+        <div class="card-header">
+            @(Model.id.HasValue? "Actualizar": "Nuevo Roles") 
+        </div>
+        <div class="card-body">
+            <form id="FormEdit">
+                <input type="hidden" asp-for="Entity.IdRoles" v-model="Entity.IdRoles" />
+
+                <div class="form-group mb-3">
+                    <label for="Entity.Nombre" class="form-label">Nombre</label>
+                    <input type="text" class="form-control" asp-for="Entity.Nombre" v-model="Entity.Nombre" maxlength="250" required>
+                </div>
+
+                
+
+                <div class="form-check form-switch">
+                    <label for="Entity.Menu_Productos" class="form-label">Menu Productos</label>
+                    <input type="checkbox" class="form-check-input" asp-for="Entity.Menu_Productos" v-model="Entity.Menu_Productos" >
+                </div>
+
+                <div class="form-check form-switch">
+                    <label for="Entity.Menu_Usuarios" class="form-label">Menu Usuarios</label>
+                    <input type="checkbox" class="form-check-input" asp-for="Entity.Menu_Usuarios" v-model="Entity.Menu_Usuarios">
+                </div>
+
+                <div class="form-check form-switch">
+                    <label for="Entity.Menu_Roles" class="form-label">Menu Roles</label>
+                    <input type="checkbox" class="form-check-input" asp-for="Entity.Menu_Roles" v-model="Entity.Menu_Roles">
+                </div>
+               
+                <div class="form-check form-switch">
+                    <label for="Entity.Menu_Bitacoras" class="form-label">Menu Bitacoras</label>
+                    <input type="checkbox" class="form-check-input" asp-for="Entity.Menu_Bitacoras" v-model="Entity.Menu_Bitacoras">
+                </div>
+
+
+
+                <div class="form-check form-switch">
+                    <label for="Entity.Actualizar_Productos" class="form-label">Actualizar Productos</label>
+                    <input type="checkbox" class="form-check-input" asp-for="Entity.Actualizar_Productos" v-model="Entity.Actualizar_Productos">
+                </div>
+                <div class="form-check form-switch">
+                    <label for="Entity.Actualizar_Usuarios" class="form-label">Actualizar Usuarios</label>
+                    <input type="checkbox" class="form-check-input" asp-for="Entity.Actualizar_Usuarios" v-model="Entity.Actualizar_Usuarios">
+                </div>
+                <div class="form-check form-switch">
+                    <label for="Entity.Actualizar_Roles" class="form-label">Actualizar Roles</label>
+                    <input type="checkbox" class="form-check-input" asp-for="Entity.Actualizar_Roles" v-model="Entity.Actualizar_Roles">
+                </div>
+                <div class="form-check form-switch">
+                    <label for="Entity.Eliminar_Productos" class="form-label">Eliminar Productos</label>
+                    <input type="checkbox" class="form-check-input" asp-for="Entity.Eliminar_Productos" v-model="Entity.Eliminar_Productos">
+                </div>
+                <div class="form-check form-switch">
+                    <label for="Entity.Eliminar_Usuarios" class="form-label">Eliminar Usuarios</label>
+                    <input type="checkbox" class="form-check-input" asp-for="Entity.Eliminar_Usuarios" v-model="Entity.Eliminar_Usuarios">
+                </div>
+                <div class="form-check form-switch">
+                    <label for="Entity.Eliminar_Roles" class="form-label">Eliminar Roles</label>
+                    <input type="checkbox" class="form-check-input" asp-for="Entity.Eliminar_Roles" v-model="Entity.Eliminar_Roles">
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="Entity.UsuarioRegistro" class="form-label">Usuario Registro </label>
+                    <input type="text" class="form-control" asp-for="Entity.UsuarioRegistro" v-model="Entity.UsuarioRegistro" readonly required>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-4">
+                        <button type="button" @@click="Save" class="btn btn-primary">
+                            @(Model.id.HasValue? "Actualizar": "Agregar")
+                        </button>
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+@section Scripts{ <script defer src="~/App/Roles/Edit.js"></script>}

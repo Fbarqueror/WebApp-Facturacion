@@ -1,0 +1,316 @@
+﻿@page
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor Context;
+@model WebApp.Pages.Factura.EditModel
+@{
+     var UsuarioSession = Context.HttpContext.Session.Get<Entity.UsuariosEntity>(IApp.UsuarioSession);
+    if (!Context.HttpContext.SessionOnline())
+    {
+        Context.HttpContext.Response.Redirect("/Login");
+    }
+    Model.Entity.UsuarioRegistro = @UsuarioSession?.Nombre;
+}
+
+
+@*workTable.Rows.Add(new Object[] {1, "Smith"});*@
+<div class="card-body">
+    <form action="" class="formulario" id="formulario">
+
+        <div class="formulario__grupo" id="grupo__TipoFactura">
+            <label for="Cliente" class="formulario__label">Tipo Factura</label>
+				<div class="formulario__grupo-input">
+                <input type="text" class="formulario__FormaPago" value="Contado" readonly>
+					
+				</div>
+				
+			</div>
+
+            <!-- Grupo: Cantidad -->
+			<div class="formulario__grupo" id="grupo__FormaPago">
+				<label for="Cantidad" class="formulario__label">Forma de pago</label>
+				<div class="formulario__grupo">
+                <input type="text" class="formulario__FormaPago" name="FormaPago" id="FormaPago" readonly value="Efectivo">
+					
+				</div>
+				
+			</div>
+
+        
+
+        <!-- Grupo: Cantidad -->
+        <div class="formulario__grupo" id="grupo__Cantidad">
+            <label for="Entity.UsuarioRegistro" class="formulario__label">Fecha </label>
+            <div class="formulario__grupo-input">
+                <input type="Text" class="formulario__FormaPago"  asp-for="Entity.FechaRegistro" v-model="Entity.FechaRegistro" readonly>
+                
+            </div>
+         
+        </div>
+
+        <!-- Grupo: Cantidad -->
+        <div class="formulario__grupo" id="grupo__Cantidad">
+            <label for="Entity.UsuarioRegistro" class="formulario__label">Vendedor </label>
+            <div class="formulario__grupo-input">
+                <input type="text" class="formulario__FormaPago" asp-for="Entity.UsuarioRegistro" v-model="Entity.UsuarioRegistro" readonly required>
+                
+            </div>
+            
+        </div>
+
+
+			   <!-- Grupo: Total -->
+        <div class="formulario__grupo" id="grupo__Total">
+            <label for="Total" class="formulario__label">Total</label>
+            <div class="formulario__grupo-input">
+                <input type="text" class="formulario__Total" name="Total" id="Total" readonly placeholder="0">
+            </div>
+      
+        </div>
+
+      
+    </form>
+
+
+     <input type="hidden" asp-for="Entity.IdFactura" v-model="Entity.IdFactura" />
+
+              
+
+        </br>
+                <div class="input-group flex-nowrap">
+                  
+                    <span class="input-group-text" for="Nombre">Nombre Cliente</span>
+        <input type="text" class="form-control" asp-for="Entity.Cliente" v-model="Entity.Cliente" id="Nombre" name="Nombre" placeholder="" required>
+        
+    </div>
+                </br>
+                <div class="input-group flex-nowrap">
+
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"> <i class="mdi mdi-magnify"></i> Buscar Producto</button>
+
+                    <span for="IdProducto" class="input-group-text">Id Producto</span>
+                    <input type="text" class="form-control" id="IdProducto" name="IdProducto" readonly placeholder="">
+
+                    <span for="NombreProducto" class="input-group-text">Nombre Producto</span>
+                    <input type="text" class="form-control" id="NombreProducto" name="NombreProducto" readonly placeholder="">
+
+                    <span for="Precio" class="input-group-text">Precio</span>
+                    <input type="text" class="form-control" id="Precio" name="Precio" readonly placeholder="">
+
+                    <span for="Impuesto" class="input-group-text">Impuesto</span>
+                    <input type="text" class="form-control" id="Impuesto" name="Impuesto" readonly placeholder="">
+                </div>
+                </br>
+                <div class="input-group flex-nowrap">
+
+
+
+        <span for="Cantidad" class="input-group-text">Cantidad</span>
+        <input type="number" class="form-control" id="Cantidad" name="Cantidad" placeholder="">
+
+        <button class='btn btn-sm btn-primary ml-2' type='button' onclick="agregarFila(document.getElementById('IdProducto').value, 
+                    document.getElementById('NombreProducto').value, document.getElementById('Precio').value, document.getElementById('Impuesto').value,
+                    document.getElementById('Cantidad').value)">
+                        <i class='mdi  mdi-library-plus'></i>Agregar Producto
+                    </button>
+
+                </div>
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Lista de Productos</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="card">
+
+                        <div class="card-body">
+
+                            <div class="dropdown-divider"></div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <table id="GridView" class="table table-bordered table table-striped table table-hover">
+                                        <thead>
+                                            <tr>
+
+                                                <th>ID</th>
+                                                <th>Nombre</th>
+                                                <th>Precio</th>
+                                                <th>IVA</th>
+                                                <th>Accion</th>
+
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+
+
+                                        <tboby>
+                                            <tboby>
+                                                @foreach (var item2 in Model.ProductoObtener)
+                                                {
+                                                    <tr>
+
+                                                        <td>@item2.IdProducto</td>
+                                                        <td>@item2.Nombre</td>
+                                                        <td>@item2.Precio</td>
+                                                        <td>@item2.Impuesto</td>
+
+
+                                                        <td><button class='btn btn-sm btn-primary ml-2' type='button' onclick="agregarFormulario('@item2.IdProducto','@item2.Nombre','@item2.Precio','@item2.Impuesto')"><i class='fas fa-check'></i>Agregar</button></td>
+
+                                                    </tr>
+                                                }
+
+
+                                            </tboby>
+                                    </table>
+
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+     <div class="dropdown-divider"></div>
+        <div class="container">
+            <table class="table caption-top table-striped" id="cantidad">
+                <caption>Lista de productos</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Codigo</th>
+                        <th scope="col">Producto</th>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col">Precio</th>
+                        <th scope="col">IVA</th>
+                        <th scope="col">Total</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                </tbody>
+
+            </table>
+
+        <div class="row g-3">
+            <div class="col-sm-7">
+            </div>
+            <div class="col-sm">
+                <label for="email" class="form-label">Sub Total</label>
+            </div>
+            <div class="col-sm">
+                <input type="text" class="form-control" id="SubTotal" placeholder="Sub Total" aria-label="Zip" readonly>
+            </div>
+        </div>
+
+        <div class="row g-3">
+            <div class="col-sm-7">
+            </div>
+            <div class="col-sm">
+                <label for="email" class="form-label">IVA</label>
+            </div>
+            <div class="col-sm">
+                <input type="text" class="form-control" id="IVA" placeholder="IVA" aria-label="Zip" readonly>
+            </div>
+        </div>
+
+        <div class="row g-3">
+            <div class="col-sm-7">
+            </div>
+            <div class="col-sm">
+                <label for="email" class="form-label">Total</label>
+            </div>
+            <div class="col-sm">
+                <input type="text" class="form-control" id="Total1" placeholder="Total" aria-label="Zip" readonly>
+            </div>
+        </div>
+</div>
+
+@section Scripts
+    {
+     <script defer src="~/App/Factura/Edit.js"></script>
+
+
+    }
+
+        <SCRIPT languaje="JavaScript"> 
+
+
+
+            var Detalle = [];
+
+           function agregarFila(pId,pNombre,pPrecio,pImpuesto,pCantidad) {
+
+            pImpuesto = parseInt(pImpuesto);
+
+            var subtotal = (Number(pPrecio) * Number(pCantidad));
+            var iva = (Number(pImpuesto) * Number(pCantidad));
+            var total = 0;
+            var xtotal = (Number(pPrecio) * Number(pCantidad)) + (Number(pImpuesto) * Number(pCantidad))
+
+            document.getElementById("cantidad").insertRow(-1).innerHTML = '<td>' + pId + '</td><td>' + pNombre + '</td><td>' + pCantidad + '</td><td>' + subtotal + '</td><td>' + iva + '</td><td>' + xtotal + '</td>';
+
+            subtotal = Number(document.getElementById('SubTotal').value) + (Number(subtotal));
+            iva = Number(document.getElementById('IVA').value) + (Number(pImpuesto) * Number(pCantidad));
+            total = (Number(subtotal) + Number(iva));
+
+            $("#SubTotal").val(subtotal);
+            $("#IVA").val(iva);
+            $("#Total").val(total);
+            $("#Total1").val(total);
+
+            Detalle.push({IdProducto:pId,Cantidad:pCantidad});
+        }
+
+
+             function printDiv() {
+
+            
+            window.print();
+           
+        }
+
+            function agregarFormulario(pId,pNombre,pPrecio,pImpuesto){
+
+               $("#IdProducto").val(pId);
+               $("#NombreProducto").val(pNombre);
+               $("#Precio").val(pPrecio);
+               $("#Impuesto").val(pImpuesto);
+
+            }
+
+
+        function save() {
+
+            var Cliente = document.getElementById("Nombre").value;
+            var UsuarioRegistro = document.getElementById("UsuarioRegistro").value;
+            var Entity = { Cliente: Cliente, UsuarioRegistro: UsuarioRegistro, Detalle: Detalle };
+
+           
+            console.log(Entity);
+            Loading.fire("Guardando");
+            App.AxiosProvider.FacturaGuardar(Entity).then(function (data) {
+                Loading.close();
+                if (data.CodeError == 0) {
+                    Toast.fire({ title: "Se guardo correctamente", icon: "success" })
+                        .then(function () { return window.location.href = "Factura/Grid"; });
+                }
+                else {
+                    Toast.fire({ title: data.MsgError, icon: "error" });
+                }
+            });
+        }
+
+        </SCRIPT>

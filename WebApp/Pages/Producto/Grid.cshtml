@@ -1,0 +1,73 @@
+﻿@page
+@model WebApp.Pages.Producto.GridModel
+@{
+}
+<div class="container-fluid">
+
+    <div class="card">
+        <div class="card-header">
+            Producto
+        </div>
+        <div class="card-body">
+
+            <a  class="btn btn-primary" asp-page="Edit">
+                <i class='bx bxs-add-to-queue'></i> Agregar Producto
+            </a>
+            <div class="dropdown-divider"></div>
+            <div class="row">
+                <div class="col-12">
+                    <table id="GridView" class="table table-bordered table table-striped table table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Precio</th>
+                                <th>IVA</th>
+                                <th>Precio Total</th>
+                                <th>Fecha Registro</th>
+                                <th>Usuario Registro</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tboby>
+                            @foreach (var item in Model.GridList)
+                            {
+                                <tr>
+                                <td>@item.IdProducto</td>
+                                <td>@item.Nombre</td>
+                                <td>@item.Precio</td>
+                                <td>@item.Impuesto</td>
+                                <td>@item.Total</td>
+                                <td>@item.FechaRegistro.ToString("dd/MM/yyyy H:mm:ss")</td>
+                                <td>@item.UsuarioRegistro</td>
+                                <td>
+                                    <a class="btn btn-primary" asp-page="Edit" asp-route-id="@item.IdProducto"><i class='bx bx-edit-alt'></i></a>
+
+                                    <button type="button" class="btn btn-danger" onclick="ProductoGrid.OnClickEliminar(@item.IdProducto)">
+                                        <i class='bx bx-trash'></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            }
+                        </tboby>
+                    </table>
+
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+
+
+</div>
+
+@section Scripts{ 
+
+    
+
+    <script defer src="~/App/Producto/Grid.js"></script>
+
+
+}

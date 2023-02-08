@@ -1,0 +1,73 @@
+﻿@page
+@model WebApp.Pages.Usuario.GridModel
+@{
+}
+<div class="container-fluid">
+
+    <div class="card">
+        <div class="card-header">
+            Usuarioo
+        </div>
+        <div class="card-body">
+
+            <a  class="btn btn-primary" asp-page="Edit">
+                <i class='bx bxs-add-to-queue'></i> Agregar Usuario
+            </a>
+            <div class="dropdown-divider"></div>
+            <div class="row">
+                <div class="col-12">
+                    <table id="GridView" class="table table-bordered table table-striped table table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Usuario</th>
+                                <th>Nombre</th>
+                                <th>Contrasena</th>
+                                <th>Rol</th>
+                                <th>Estado</th>
+                                <th>Usuario Registro</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tboby>
+                            @foreach (var item3 in Model.GridList)
+                            {
+                                <tr>
+                                <td>@item3.IdUsuario</td>
+                                <td>@item3.Usuario</td>
+                                <td>@item3.Nombre</td>
+                                <td>@item3.Contrasena</td>
+                                <td>@item3.Rol</td>
+                                <td>@item3.Estado</td>
+                                <td>@item3.UsuarioRegistro</td>
+                                <td>
+                                        <a class="btn btn-primary" asp-page="Edit" asp-route-id="@item3.IdUsuario"><i class='bx bx-edit-alt'></i></a>
+
+                                        <button type="button" class="btn btn-danger" onclick="UsuarioGrid.OnClickEliminar(@item3.IdUsuario)">
+                                        <i class='bx bx-trash'></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            }
+                        </tboby>
+                    </table>
+
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+
+
+</div>
+
+@section Scripts{
+
+
+
+    <script defer src="~/App/Usuario/Grid.js"></script>
+
+
+}
